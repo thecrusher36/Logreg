@@ -123,9 +123,6 @@ public class RegisterActivity extends Activity {
         pDialog.setMessage("Registering ...");
         showDialog();
 
-//        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.URL_REGISTER,
-//                new Response.Listener<String>() {
-
         StringRequest strReq = new StringRequest(Method.POST,
                 AppConfig.URL_REGISTER, new Response.Listener<String>() {
 
