@@ -6,4 +6,8 @@ public class AppConfig {
 
     // Server user register url
     public static String URL_REGISTER = "http://apps.suryadi.web.id/loginregister/register.php";
+
+    // Server user posting url
+    public static String URL_POSTING = "http://apps.suryadi.web.id/loginregister/posting.php";
+
 }
