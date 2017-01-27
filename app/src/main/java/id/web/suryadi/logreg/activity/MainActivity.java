@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
                             if (!error) {
                                 // successfully add the posting to MySQL
                                 Toast.makeText(getApplicationContext(), "Your post successfully posted", Toast.LENGTH_LONG).show();
-                                txtPost.clearComposingText();
+                                txtPost.setText(null);
                             } else {
 
                                 // Error occurred in registration. Get the error
