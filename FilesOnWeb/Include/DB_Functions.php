@@ -1,11 +1,11 @@
 <?php
-class DB_Functios {
+class DB_Functions {
 	private $conn;
 
 	//constructor
 	function __construct() {
 		require_once 'DB_Connect.php';
-		require_once 'Config.php'
+		require_once 'Config.php';
 		//connecting to database
 		$db = new DB_Connect();
 		$this->conn = $db->connect();
@@ -24,14 +24,14 @@ class DB_Functios {
 		$encrypted_password = $hash["encrypted"]; //encrypted password
 		$salt = $hash["salt"]; //salt
 
-		$stmt = $this->conn->prepare("INSERT INTO TB_USERS(unique_id, name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, NOW())");
+		$stmt = $this->conn->prepare("INSERT INTO users(unique_id, name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, NOW())");
 		$stmt->bind_param("sssss", $uuid, $name, $email, $encrypted_password, $salt);
 		$result = $stmt->execute();
 		$stmt->close();
 
 		//check for successful store
 		if ($result) {
-			$stmt = $this->conn->prepare("SELECT * FROM TB_USERS WHERE email = ?");
+			$stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
 			$stmt->bind_param("s", $email);
 			$stmt->execute();
 			$user = $stmt->get_result()->fetch_assoc();
@@ -48,7 +48,7 @@ class DB_Functios {
 	//
 	public function getUserByEmailAndPassword($email, $password) {
 
-		$stmt = $this->conn->prepare("SELECT * FROM TB_USERS WHERE email = ?");
+		$stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
 
 		$stmt->bind_param("s", $email);
 
@@ -74,7 +74,7 @@ class DB_Functios {
 	//Check user is exixted or not
 	//
 	public function isUserExisted($email) {
-		$stmt = $this->conn->prepare("SELECT email from TB_USERS WHERE email = ?");
+		$stmt = $this->conn->prepare("SELECT email from users WHERE email = ?");
 
 		$stmt->bind_param("s", $email);
 
@@ -119,14 +119,14 @@ class DB_Functios {
 
 	public function storePost($uid, $post){
 		  //insert params to table
-			$stmt = $this->conn->prepare("INSERT INTO TB_POSTING(user_unique_id, post, created_at) VALUES(?, ?, NOW())");
+			$stmt = $this->conn->prepare("INSERT INTO posting(user_unique_id, post, created_at) VALUES(?, ?, NOW())");
 			$stmt->bind_param("ss", $uid, $post);
 			$result = $stmt->execute();
 			$stmt->close();
 
 			//check for successful store
 			if ($result) {
-				$stmt = $this->conn->prepare("SELECT * FROM TB_POSTING WHERE user_unique_id = ?");
+				$stmt = $this->conn->prepare("SELECT * FROM posting WHERE user_unique_id = ?");
 				$stmt->bind_param("s", $uid);
 				$stmt->execute();
 				$check = $stmt->get_result()->fetch_assoc();
