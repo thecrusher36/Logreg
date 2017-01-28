@@ -1,4 +1,4 @@
-package id.web.suryadi.logreg.activity;
+package id.web.suryadi.logreg.activity.AdminActivity;
 
 import java.util.HashMap;
 
@@ -10,8 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import id.web.suryadi.logreg.R;
+import id.web.suryadi.logreg.activity.LoginActivity;
 import id.web.suryadi.logreg.helper.SessionManager;
-import id.web.suryadi.logreg.helper.SQLiteHandler;
+import id.web.suryadi.logreg.helper.users.SQLiteHandler;
 
 public class AdminActivity extends Activity {
 

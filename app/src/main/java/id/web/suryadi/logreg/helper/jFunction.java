@@ -3,7 +3,7 @@ package id.web.suryadi.logreg.helper;
 import android.content.Context;
 import android.content.Intent;
 
-import id.web.suryadi.logreg.activity.AdminActivity;
+import id.web.suryadi.logreg.activity.AdminActivity.AdminActivity;
 import id.web.suryadi.logreg.activity.MainActivity;
 
 /**

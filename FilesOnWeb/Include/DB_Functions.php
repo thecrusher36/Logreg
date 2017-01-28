@@ -138,6 +138,18 @@ class DB_Functions {
 			}
 	}
 
+	public function getPsot() {
+			$stmt = $this->conn->prepare("SELECT * FROM posting");
+
+			if ($stmt->execute()) {
+				$posting = $stmt->get_result()->fetch_assoc();
+				$stmt->close();
+				return $posting;
+			} else {
+				return NULL;
+			}
+	}
+
 }
 
 ?>

@@ -30,7 +30,7 @@ import id.web.suryadi.logreg.R;
 import id.web.suryadi.logreg.app.AppConfig;
 import id.web.suryadi.logreg.app.AppController;
 import id.web.suryadi.logreg.helper.SessionManager;
-import id.web.suryadi.logreg.helper.SQLiteHandler;
+import id.web.suryadi.logreg.helper.users.SQLiteHandler;
 import id.web.suryadi.logreg.helper.jFunction;
 
 public class LoginActivity extends Activity {
@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
     private SessionManager session;
     private SQLiteHandler db;
     private jFunction jFunction;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
