@@ -22,11 +22,6 @@ if (isset($_POST['uid']) && isset($_POST['post'])){
     $response["error_msg"] = "Unknown error occurred in process!";
     echo json_encode($response);
   }
-} elseif (isset($_POST['stat'])) {
-  $posting = $db->getPost();
-  $response["error"] = FALSE;
-  $response["posting"] = $posting;
-  echo json_encode($response);
 } else {
   $response["error"] = TRUE;
   $response["error_msg"] = "Required parameters is missing!";
