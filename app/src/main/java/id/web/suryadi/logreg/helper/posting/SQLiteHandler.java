@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Sandi Suryadi on 1/28/2017.
  * Web : suryadi.web.id
@@ -29,7 +33,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     //posting table columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+    private static final String KEY_UID = "uid";
     private static final String KEY_POST = "post";
     private static final String KEY_CREATED_AT = "created_at";
     private static final String KEY_APPROVED = "approved";
@@ -41,7 +45,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_POSTING_TABLE = "CREATE TABLE " + TABLE_USER + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_UID + " TEXT,"
                 + KEY_POST + " TEXT," + KEY_CREATED_AT + " TEXT,"
                 + KEY_APPROVED + " TEXT" + ")";
         db.execSQL(CREATE_POSTING_TABLE);
@@ -59,5 +63,42 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Storing post details in database
+     * */
+    public void storePost(JSONArray jsonArray) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (int i=0; i< jsonArray.length();i++){
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                ContentValues values = new ContentValues();
+                values.put(KEY_ID, jsonObject.getString("id"));
+                values.put(KEY_UID, jsonObject.getString("uid"));
+                values.put(KEY_POST, jsonObject.getString("post"));
+                values.put(KEY_CREATED_AT, jsonObject.getString("created_at"));
+                values.put(KEY_APPROVED, jsonObject.getString("approved"));
+
+                // Inserting Row
+                long id = db.insert(TABLE_USER, null, values);
+                Log.d(TAG, "New post inserted into sqlite: " + id);
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        db.close(); // Closing database connection
+    }
+
+    /**
+     * Re crate database Delete all tables and create them again
+     * */
+    public void deletePosting() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_USER, null, null);
+        db.close();
+
+        Log.d(TAG, "Deleted all post from sqlite");
+    }
 
 }

@@ -1,26 +1,14 @@
 <?php
-	private $conn;
 
-	//constructor
-	function __construct() {
-		require_once '/Include/DB_Connect.php';
-		require_once '/Include/Config.php';
-		//connecting to database
-		$db = new DB_Connect();
-		$this->conn = $db->connect();
-	}
+	require_once 'Include/Config.php';
 
-	//destructor
-	function __destructor() {
+	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+	$sql = "SELECT * FROM posting";
+	$r = mysqli_query($conn,$sql);
 
-	}
-
-  $stmt = $this->conn->prepare("SELECT * FROM posting");
-  $stmt->execute();
-  $r = $stmt->get_result();
   $result = array();
 
-  while ($row = mysql_fetch_array($r)) {
+  while ($row = mysqli_fetch_array($r)) {
     array_push($result,array(
       'id'=>$row['id'],
       'uid'=>$row['user_unique_id'],
@@ -31,5 +19,5 @@
   }
   echo json_encode(array('result'=>$result));
 
-  $stmt->close();
+	mysqli_close($conn);
 ?>
