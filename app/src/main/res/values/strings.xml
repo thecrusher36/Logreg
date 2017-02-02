@@ -13,4 +13,6 @@
     <string name="main_tV_01">Write a post</string>
     <string name="main_eT_01_hint">Write here</string>
     <string name="btn_post">POST</string>
+    <string name="approve">APPROVE</string>
+    <string name="unapprove">UNAPPROVE</string>
 </resources>

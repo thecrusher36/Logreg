@@ -107,6 +107,17 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return user;
     }
 
+//    public String getNamaByUID(String u){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "+ KEY_UID +" = " + u;
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//        cursor.moveToFirst();
+//        String re = cursor.getString(1);
+//        cursor.close();
+//        db.close();
+//        return re;
+//    }
+
     /**
      * Re crate database Delete all tables and create them again
      * */

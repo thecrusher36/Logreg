@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -29,11 +30,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "POSTING_DB";
 
     // Posting table name
-    private static final String TABLE_USER = "posting";
+    public static final String TABLE_USER = "posting";
 
     //posting table columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_UID = "uid";
+    private static final String KEY_NAME = "name";
     private static final String KEY_POST = "post";
     private static final String KEY_CREATED_AT = "created_at";
     private static final String KEY_APPROVED = "approved";
@@ -45,7 +46,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_POSTING_TABLE = "CREATE TABLE " + TABLE_USER + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_UID + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_POST + " TEXT," + KEY_CREATED_AT + " TEXT,"
                 + KEY_APPROVED + " TEXT" + ")";
         db.execSQL(CREATE_POSTING_TABLE);
@@ -74,7 +75,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
                 ContentValues values = new ContentValues();
                 values.put(KEY_ID, jsonObject.getString("id"));
-                values.put(KEY_UID, jsonObject.getString("uid"));
+                values.put(KEY_NAME, jsonObject.getString("name"));
                 values.put(KEY_POST, jsonObject.getString("post"));
                 values.put(KEY_CREATED_AT, jsonObject.getString("created_at"));
                 values.put(KEY_APPROVED, jsonObject.getString("approved"));
@@ -87,6 +88,18 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             }
         }
         db.close(); // Closing database connection
+    }
+
+    //check if database already exist
+    public boolean checkDatabase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            checkDB = getReadableDatabase();
+        } catch (SQLiteException e) {
+
+        }
+        if (checkDB != null) checkDB.close();
+        return checkDB != null;
     }
 
     /**

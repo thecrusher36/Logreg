@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import id.web.suryadi.logreg.R;
@@ -40,10 +41,16 @@ public class Adapter_Ap extends ArrayAdapter<list_item>{
         TextView ap_name = (TextView) convertView.findViewById(R.id.ap_name);
         TextView ap_post = (TextView) convertView.findViewById(R.id.ap_post);
         TextView ap_datetime = (TextView) convertView.findViewById(R.id.ap_datetime);
+        Button ap_btnApprove = (Button) convertView.findViewById(R.id.ap_btnAprove);
 
         ap_name.setText(item.getName());
         ap_post.setText(item.getPost());
         ap_datetime.setText(item.getDatetime());
+        if (item.getApprove() == 0){
+            ap_btnApprove.setText(R.string.approve);
+        } else {
+            ap_btnApprove.setText(R.string.unapprove);
+        }
         return convertView;
     }
 }

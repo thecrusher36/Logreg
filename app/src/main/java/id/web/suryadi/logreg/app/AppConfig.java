@@ -10,7 +10,6 @@ public class AppConfig {
     // Server user store posting url
     public static String URL_POSTING = "http://apps.suryadi.web.id/loginregister/posting.php";
 
-
     // Server user get posting url
     public static String URL_GET_POSTING = "http://apps.suryadi.web.id/loginregister/get_posting.php";
 

@@ -10,6 +10,7 @@ public class list_item {
     private String name;
     private String post;
     private String datetime;
+    private Integer approve;
 
     public String getName() {
         return name;
@@ -33,5 +34,13 @@ public class list_item {
 
     public void setDatetime(String datetime) {
         this.datetime = datetime;
+    }
+
+    public Integer getApprove() {
+        return approve;
+    }
+
+    public void setApprove(Integer approve) {
+        this.approve = approve;
     }
 }

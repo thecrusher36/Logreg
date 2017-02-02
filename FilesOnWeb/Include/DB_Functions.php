@@ -138,25 +138,14 @@ class DB_Functions {
 			}
 	}
 
-	// public function getPsot() {
-	// 		$stmt = $this->conn->prepare("SELECT * FROM posting");
-	// 		$stmt->execute();
-	// 		$r = $stmt->get_result();
-	// 		$result = array();
-	//
-	// 		while ($row = mysql_fetch_array($r)) {
-	// 			array_push($result,array(
-	// 				'id'=>$row['id'],
-	// 				'uid'=>$row['user_unique_id'],
-	// 				'post'=>$row['post'],
-	// 				'created_at'=>$row['created_at'],
-	// 				'approved'=>$row['approved']
-	// 			));
-	// 		}
-	//     echo json_encode(array('result'=>$result));
-	//
-	// 		$stmt->close();
-	// }
+	public function getUserByUID($uid){
+			$stmt = $this->conn->prepare("SELECT name FROM users WHERE unique_id = ?");
+			$stmt->bind_param("s", $uid);
+			$stmt->execute();
+			$r = mysqli_fetch_row($stmt->get_result());
+			$stmt->close();
+			return $r[0];
+	}
 
 }
 

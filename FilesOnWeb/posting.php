@@ -10,7 +10,6 @@ if (isset($_POST['uid']) && isset($_POST['post'])){
   //reciving the post params
   $uid = $_POST['uid'];
   $post = $_POST['post'];
-  $stat = $_POST['stat']
 
   $posting = $db->storePost($uid, $post);
   if ($posting) {

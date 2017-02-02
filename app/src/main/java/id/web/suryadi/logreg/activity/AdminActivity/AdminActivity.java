@@ -1,16 +1,24 @@
 package id.web.suryadi.logreg.activity.AdminActivity;
 
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,8 +32,11 @@ import org.json.JSONObject;
 import id.web.suryadi.logreg.R;
 import id.web.suryadi.logreg.activity.LoginActivity;
 import id.web.suryadi.logreg.app.AppConfig;
+import id.web.suryadi.logreg.app.AppController;
 import id.web.suryadi.logreg.helper.SessionManager;
+import id.web.suryadi.logreg.helper.jFunction;
 import id.web.suryadi.logreg.helper.users.SQLiteHandler;
+import id.web.suryadi.logreg.helper.jFunction;
 
 public class AdminActivity extends Activity {
 
@@ -38,7 +49,12 @@ public class AdminActivity extends Activity {
     private ProgressDialog pDialog;
 
     private id.web.suryadi.logreg.helper.posting.SQLiteHandler db_post;
+    private ArrayList<list_item> arrayList = new ArrayList<>();
+    private Adapter_Ap adapter_ap;
+    private ListView listView;
     private JSONArray result;
+    private jFunction jF;
+    private String x = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +64,7 @@ public class AdminActivity extends Activity {
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -83,7 +100,7 @@ public class AdminActivity extends Activity {
             }
         });
 
-        db_post.deletePosting();
+        if (db_post.checkDatabase()) db_post.deletePosting();
         pDialog.setMessage("Getting data ...");
         showDialog();
 
@@ -97,6 +114,7 @@ public class AdminActivity extends Activity {
                             j = new JSONObject(response);
                             result = j.getJSONArray("result");
                             db_post.storePost(result);
+                            handleList();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -115,6 +133,36 @@ public class AdminActivity extends Activity {
         //Adding request to the queue
         requestQueue.add(stringRequest);
 
+
+    }
+
+    /**
+     * handle the listview
+     */
+    private void handleList(){
+        SQLiteDatabase db_ = db_post.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + id.web.suryadi.logreg.helper.posting.SQLiteHandler.TABLE_USER;
+        try {
+            Cursor cursor = db_.rawQuery(selectQuery, null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        list_item item = new list_item();
+                        item.setName(cursor.getString(1));
+                        item.setPost(cursor.getString(2));
+                        item.setDatetime(cursor.getString(3));
+                        item.setApprove(Integer.parseInt(cursor.getString(4)));
+                        arrayList.add(item);
+                    } while (cursor.moveToNext());
+                    cursor.close();
+                }
+            }
+        } catch (SQLException e){}
+
+        adapter_ap = new Adapter_Ap(this,R.layout.aproving_list,arrayList);
+        listView = (ListView) findViewById(R.id.list_app);
+        listView.setAdapter(adapter_ap);
+        adapter_ap.notifyDataSetChanged();
     }
 
     /**
@@ -142,4 +190,5 @@ public class AdminActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
 }
