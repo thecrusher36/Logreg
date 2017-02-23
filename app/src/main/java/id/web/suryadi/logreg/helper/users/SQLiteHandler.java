@@ -1,4 +1,4 @@
-package id.web.suryadi.logreg.helper;
+package id.web.suryadi.logreg.helper.users;
 
 /**
  * Created by sandi on 1/20/2017.

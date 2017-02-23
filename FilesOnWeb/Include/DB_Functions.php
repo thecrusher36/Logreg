@@ -138,6 +138,15 @@ class DB_Functions {
 			}
 	}
 
+	public function getUserByUID($uid){
+			$stmt = $this->conn->prepare("SELECT name FROM users WHERE unique_id = ?");
+			$stmt->bind_param("s", $uid);
+			$stmt->execute();
+			$r = mysqli_fetch_row($stmt->get_result());
+			$stmt->close();
+			return $r[0];
+	}
+
 }
 
 ?>

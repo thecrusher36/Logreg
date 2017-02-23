@@ -28,7 +28,7 @@ import java.util.Map;
 import id.web.suryadi.logreg.R;
 import id.web.suryadi.logreg.app.AppConfig;
 import id.web.suryadi.logreg.app.AppController;
-import id.web.suryadi.logreg.helper.SQLiteHandler;
+import id.web.suryadi.logreg.helper.users.SQLiteHandler;
 import id.web.suryadi.logreg.helper.SessionManager;
 import id.web.suryadi.logreg.helper.jFunction;
 

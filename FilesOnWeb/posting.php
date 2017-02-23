@@ -22,9 +22,9 @@ if (isset($_POST['uid']) && isset($_POST['post'])){
     echo json_encode($response);
   }
 } else {
-    $response["error"] = TRUE;
-    $response["error_msg"] = "Required parameters is missing!";
-    echo json_encode($response);
+  $response["error"] = TRUE;
+  $response["error_msg"] = "Required parameters is missing!";
+  echo json_encode($response);
 }
 
 ?>
