@@ -11,6 +11,15 @@ public class list_item {
     private String post;
     private String datetime;
     private Integer approve;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

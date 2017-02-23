@@ -2,6 +2,7 @@ package id.web.suryadi.logreg.activity.AdminActivity;
 
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +56,15 @@ public class AdminActivity extends Activity {
     private JSONArray result;
     private jFunction jF;
     private String x = null;
+
+    public static ObserveApprove observeApprove = new ObserveApprove();
+
+//    public boolean ApproveTrigger = false;
+//
+//    public void setApproveTrigger(boolean approveTrigger) {
+//        ApproveTrigger = approveTrigger;
+//        ObserveApprove.set(approveTrigger);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +143,24 @@ public class AdminActivity extends Activity {
         //Adding request to the queue
         requestQueue.add(stringRequest);
 
+        observeApprove.setOnApproveChangeListener(new OnApproveChangeListener() {
+            @Override
+            public void onApproveChange(boolean newValue) {
+                arrayList = new ArrayList<>();
+                handleList();
+            }
+        });
 
+//        Runnable run = new Runnable() {
+//            public void run() {
+//                //reload content
+//                arrayList.clear();
+//                arrayList.addAll((Collection<? extends list_item>) item);
+//                adapter_ap.notifyDataSetChanged();
+//                listView.invalidateViews();
+//                listView.refreshDrawableState();
+//            }
+//        };
     }
 
     /**
@@ -148,6 +175,7 @@ public class AdminActivity extends Activity {
                 if (cursor.moveToFirst()) {
                     do {
                         list_item item = new list_item();
+                        item.setId(cursor.getString(0));
                         item.setName(cursor.getString(1));
                         item.setPost(cursor.getString(2));
                         item.setDatetime(cursor.getString(3));
@@ -191,4 +219,26 @@ public class AdminActivity extends Activity {
             pDialog.dismiss();
     }
 
+    public interface OnApproveChangeListener{
+        public void onApproveChange(boolean newValue);
+    }
+
+    public static class ObserveApprove {
+        private OnApproveChangeListener listener;
+        private boolean value;
+        public void setOnApproveChangeListener(OnApproveChangeListener listener){
+            this.listener = listener;
+        }
+
+        public boolean get(){
+            return value;
+        }
+
+        public void set(boolean value) {
+            this.value = value;
+            if(listener != null){
+                listener.onApproveChange(value);
+            }
+        }
+    }
 }

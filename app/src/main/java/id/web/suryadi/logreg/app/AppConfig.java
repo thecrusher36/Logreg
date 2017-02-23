@@ -13,4 +13,6 @@ public class AppConfig {
     // Server user get posting url
     public static String URL_GET_POSTING = "http://apps.suryadi.web.id/loginregister/get_posting.php";
 
+    // Server approving post url
+    public static String URL_APPROVING = "http://apps.suryadi.web.id/loginregister/approve.php";
 }

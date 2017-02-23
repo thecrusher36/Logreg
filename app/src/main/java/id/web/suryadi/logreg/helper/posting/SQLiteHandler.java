@@ -90,7 +90,28 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    //check if database already exist
+
+    /**
+     * change SQLite database of posting at approve status
+     * @param id id of row
+     * @param app previous approval status
+     */
+    public void updateApprove(String id, Integer app){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        if (app == 0){
+            values.put(KEY_APPROVED, "1");
+        } else {
+            values.put(KEY_APPROVED, "0");
+        }
+        db.update(TABLE_USER, values, "id = "+id, null);
+        db.close();
+    }
+
+    /**
+     * check if database already exist
+     * @return database if exist
+     */
     public boolean checkDatabase() {
         SQLiteDatabase checkDB = null;
         try {
